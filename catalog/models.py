@@ -14,7 +14,7 @@ class Genre(models.Model):
 class Book(models.Model):
     """Model representing a book, but not a specific copy i.e. A library can have a number of specific copies or instances of a given "Book" """
     title = models.CharField(max_length=150)
-    author = models.ForeignKey('Author', on_delete = models.SET_NULL) # "Author" as a string is used, as the Author model hasn't been defined yet
+    author = models.ForeignKey('Author', on_delete = models.SET_NULL, null=True) # "Author" as a string is used, as the Author model hasn't been defined yet
     summary = models.TextField(max_length = 1000, help_text='Enter a brief description of the book', blank=True)
     isbn = models.CharField(verbose_name='ISBN', max_length=13,
             unique = True,
@@ -22,6 +22,7 @@ class Book(models.Model):
             )
     # ManyToManyField used because genre can contain many books.Books can cover many genres.
     genre = models.ManyToManyField(Genre, help_text= 'Select a genre')
+    language = models.ForeignKey('Language', on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
         """String for representing the Model object."""
@@ -77,3 +78,12 @@ class Author(models.Model):
     def __str__(self):
         """String for representing the Model object."""
         return f'{self.last_name}, {self.first_name}'
+
+class Language(models.Model):
+    """Model representing a Language (e.g. English, French, Japanese, etc.)"""
+    name = models.CharField(max_length=200,
+                            help_text="Enter the book's natural language (e.g. English, French, Japanese etc.)")
+
+    def __str__(self):
+        """String for representing the Model object (in Admin site etc.)"""
+        return self.name
