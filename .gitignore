@@ -18,3 +18,6 @@ venv/
 ENV/ 
 env.bak/ 
 venv.bak/ 
+
+#secrets file where secret values live
+secrets.json
