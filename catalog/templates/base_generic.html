@@ -32,14 +32,15 @@
         <hr />
         <ul class="sidebar-nav">
         <h3>Staff</h3>
-          {% if perms.catalog.can_mark_returned %}
+        {% if perms.catalog.can_mark_returned %}
         <li><a href="{% url 'catalog:all_borrowed' %}">All borrowed</a></li>
+        <li><a href="{% url 'catalog:author_create'%}">Add Author</a></li>
         <li><a href="{%url 'catalog:book_create' %}">Add Book</a></li>
-          {% endif %}
+        {% endif %}
         </ul>
          {% endif %}
 
-     {% endblock %}
+    {% endblock %}
       </div>
       <div class="col-sm-10 ">
         {% block content %}
