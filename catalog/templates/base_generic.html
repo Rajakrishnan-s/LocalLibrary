@@ -33,6 +33,7 @@
         <ul class="sidebar-nav">
         <h3>Staff</h3>
           {% if perms.catalog.can_mark_returned %}
+        <li><a href="{% url 'catalog:all_borrowed' %}">All borrowed</a></li>
         <li><a href="{%url 'catalog:book_create' %}">Add Book</a></li>
           {% endif %}
         </ul>

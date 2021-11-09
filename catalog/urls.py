@@ -11,6 +11,7 @@ urlpatterns = [
     path('author/<int:pk>', views.AuthorDetailView.as_view(), name='author_detail'),
     path('mybooks/', views.LoanedBooksByUserListView.as_view(), name='my_borrowed'),
     path('allborrowed/', views.AllBorrowedBooksListView.as_view(), name='all_borrowed'),
+    path('book/<uuid:pk>/renew/', views.renew_book_librarian, name='renew_book_librarian'),
 ]
 # Add URLConf to create, update, and delete books
 urlpatterns += [
