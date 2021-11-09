@@ -66,3 +66,22 @@ class AllBorrowedBooksListView(LoginRequiredMixin,PermissionRequiredMixin,generi
         return(BookInstance.objects
         .filter(status__exact = 'o')
         .order_by('due_back'))
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.urls import reverse_lazy
+# Classes created for the forms challenge
+class BookCreate(PermissionRequiredMixin, CreateView):
+    model = Book
+    fields = ['title', 'author', 'summary', 'isbn', 'genre', 'language']
+    permission_required = 'catalog.can_mark_returned'
+
+
+class BookUpdate(PermissionRequiredMixin, UpdateView):
+    model = Book
+    fields = ['title', 'author', 'summary', 'isbn', 'genre', 'language']
+    permission_required = 'catalog.can_mark_returned'
+
+
+class BookDelete(PermissionRequiredMixin, DeleteView):
+    model = Book
+    success_url = reverse_lazy('books')
+    permission_required = 'catalog.can_mark_returned'
