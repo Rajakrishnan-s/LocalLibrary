@@ -11,39 +11,36 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
-import os,json
+import os
+import environ # it is from djanog-environ package . https://github.com/joke2k/django-environ
 from django.core.exceptions import ImproperlyConfigured
 
-#defining the secrets file directory
-file_dir = Path(__file__).resolve().parent
-secrets_dir = os.path.join(file_dir,'secrets.json')
-# JSON-based secrets module
-with open(secrets_dir) as f:
-    secrets = json.load(f)
 
-def get_secret(setting, secrets=secrets):
-    '''Get the secret variable or return explicit exception.'''
-    try:
-        return secrets[setting]
-    except KeyError:
-        error_msg = 'Set the {0} environment variable'.format(setting)
-        raise ImproperlyConfigured(error_msg)
+env = environ.Env(
+    # set casting, default value
+    DEBUG=(bool, False)
+)
+
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
+# Take environment variables from .env file
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY =get_secret("SECRET_KEY")
+# False if not in os.environ because of casting above
+DEBUG = env('DEBUG')
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = get_secret("DEBUG") or False
+# Raises Django's ImproperlyConfigured
+# exception if SECRET_KEY not in os.environ
+SECRET_KEY = env('SECRET_KEY')
 
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = []  
 
 
 # Application definition
