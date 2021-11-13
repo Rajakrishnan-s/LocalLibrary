@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 
 from .models import Book, Author, BookInstance
 
-@login_required
+
 def index(request):
     """View function for home page of site."""
 
@@ -30,17 +30,17 @@ def index(request):
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin # for adding login required constraint to the view classes
 
-class BookListView(LoginRequiredMixin, generic.ListView):
+class BookListView( generic.ListView):
     model = Book
     paginate_by = 3
 
-class AuthorListView(LoginRequiredMixin, generic.ListView):
+class AuthorListView( generic.ListView):
     model = Author
 
-class BookDetailView(LoginRequiredMixin, generic.DetailView):
+class BookDetailView( generic.DetailView):
     model = Book
 
-class AuthorDetailView(LoginRequiredMixin, generic.DetailView):
+class AuthorDetailView( generic.DetailView):
     model = Author
 
 class LoanedBooksByUserListView(LoginRequiredMixin,generic. ListView):
